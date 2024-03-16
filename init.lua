@@ -167,6 +167,16 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- Custom keymaps
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
+-- vim.keymap.set('n', '<leader>gg', ':LazyGit', { silent = true })
+
+local format_sync_grp = vim.api.nvim_create_augroup('GoImport', {})
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*.go',
+  callback = function()
+    require('go.format').goimport()
+  end,
+  group = format_sync_grp,
+})
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -542,6 +552,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         gopls = {},
+        golangci_lint_ls = {},
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -814,7 +825,7 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {
   ui = {
     -- If you have a Nerd Font, set icons to an empty table which will use the
