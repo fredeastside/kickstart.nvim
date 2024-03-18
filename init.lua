@@ -167,7 +167,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- Custom keymaps
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
--- vim.keymap.set('n', '<leader>gg', ':LazyGit', { silent = true })
+vim.keymap.set('n', '<leader>gg', ':LazyGit<CR>', { silent = true })
 
 local format_sync_grp = vim.api.nvim_create_augroup('GoImport', {})
 vim.api.nvim_create_autocmd('BufWritePre', {
