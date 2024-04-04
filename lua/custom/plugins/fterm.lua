@@ -13,6 +13,10 @@ return {
           y = 0.5,
         },
       }
+
+      -- Fterm
+      map('n', '<leader>tt', ":lua require('FTerm').toggle()<CR>", { noremap = true })
+      map('t', '<leader>tt', '<C-\\><C-n>:lua require("FTerm").toggle()<CR>', { noremap = true })
     end,
   },
 }

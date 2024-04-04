@@ -84,31 +84,10 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+require 'core'
 
 -- Set to true if you have a Nerd Font installed
 vim.g.have_nerd_font = true
-
-require 'core'
-
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
--- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
--- Custom keymaps
-vim.keymap.set('n', '<C-d>', '<C-d>zz')
-vim.keymap.set('n', '<C-u>', '<C-u>zz')
-vim.keymap.set('n', '<leader>gg', '<Cmd>LazyGit<CR>', { silent = true })
-vim.keymap.set('n', '<leader>e', '<Cmd>Neotree toggle<CR>', { silent = true })
-vim.keymap.set('n', '<leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', { desc = 'action' })
 
 local format_sync_grp = vim.api.nvim_create_augroup('GoImport', {})
 vim.api.nvim_create_autocmd('BufWritePre', {
@@ -118,10 +97,6 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   end,
   group = format_sync_grp,
 })
-
--- Fterm
-vim.api.nvim_set_keymap('n', '<leader>tt', ":lua require('FTerm').toggle()<CR>", { noremap = true })
-vim.api.nvim_set_keymap('t', '<leader>tt', '<C-\\><C-n>:lua require("FTerm").toggle()<CR>', { noremap = true })
 
 -- dap
 --require('dapui').setup()

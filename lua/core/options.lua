@@ -1,3 +1,5 @@
+vim.cmd 'let g:netrw_liststyle = 3'
+
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
