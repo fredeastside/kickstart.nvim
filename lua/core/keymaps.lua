@@ -15,6 +15,4 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- Custom keymaps
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
-vim.keymap.set('n', '<leader>gg', '<Cmd>LazyGit<CR>', { silent = true })
-vim.keymap.set('n', '<leader>e', '<Cmd>Neotree toggle<CR>', { silent = true })
 vim.keymap.set('n', '<leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', { desc = 'action' })
