@@ -7,18 +7,24 @@ return {
     config = function()
       require('mason').setup()
 
-      local mason_registry = require 'mason-registry'
-      local codelldb = mason_registry.get_package 'codelldb'
-      local extension_path = codelldb:get_install_path() .. '/extension/'
-      local codelldb_path = extension_path .. 'adapter/codelldb'
-      local liblldb_path = extension_path .. 'lldb/lib/liblldb.dylib'
-      local cfg = require 'rustaceanvim.config'
+      local ok, codelldb = pcall(function()
+        local mason_registry = require 'mason-registry'
+        local pkg = mason_registry.get_package 'codelldb'
+        return pkg:get_install_path()
+      end)
 
-      vim.g.rustaceanvim = {
-        dap = {
-          adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
-        },
-      }
+      if ok and codelldb then
+        local extension_path = codelldb .. '/extension/'
+        local codelldb_path = extension_path .. 'adapter/codelldb'
+        local liblldb_path = extension_path .. 'lldb/lib/liblldb.dylib'
+        local cfg = require 'rustaceanvim.config'
+
+        vim.g.rustaceanvim = {
+          dap = {
+            adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
+          },
+        }
+      end
     end,
   },
   {

@@ -25,6 +25,7 @@ return {
     'ray-x/lsp_signature.nvim',
     event = 'VeryLazy',
     opts = {},
+    build = 'git -C . checkout -- doc/tags 2>/dev/null; echo doc/tags >> .git/info/exclude',
     config = function(_, opts)
       require('lsp_signature').setup(opts)
     end,
