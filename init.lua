@@ -89,6 +89,8 @@ require 'core'
 -- Set to true if you have a Nerd Font installed
 vim.g.have_nerd_font = true
 
+
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
