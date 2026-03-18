@@ -24,6 +24,48 @@ return {
           },
         }
       end
+
+      -- Auto-import on save: request all quickfixes and apply import suggestions
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        pattern = '*.rs',
+        callback = function(args)
+          local clients = vim.lsp.get_clients { bufnr = args.buf, name = 'rust_analyzer' }
+          if #clients == 0 then
+            return
+          end
+          local client = clients[1]
+          local lsp_diags = {}
+          for _, d in ipairs(vim.diagnostic.get(args.buf)) do
+            if d.user_data and d.user_data.lsp then
+              table.insert(lsp_diags, d.user_data.lsp)
+            end
+          end
+          if #lsp_diags == 0 then
+            return
+          end
+          local params = {
+            textDocument = vim.lsp.util.make_text_document_params(args.buf),
+            context = {
+              only = { 'quickfix' },
+              diagnostics = lsp_diags,
+            },
+            range = {
+              start = { line = 0, character = 0 },
+              ['end'] = { line = vim.api.nvim_buf_line_count(args.buf), character = 0 },
+            },
+          }
+          local result = client.request_sync('textDocument/codeAction', params, 3000, args.buf)
+          if result and result.result then
+            for _, action in ipairs(result.result) do
+              if action.title and action.title:match 'importing' then
+                if action.edit then
+                  vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding)
+                end
+              end
+            end
+          end
+        end,
+      })
     end,
   },
   {
