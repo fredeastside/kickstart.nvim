@@ -480,6 +480,7 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
+        buf_ls = {},
         gopls = {},
         golangci_lint_ls = {},
         sqls = {},
@@ -551,6 +552,7 @@ require('lazy').setup({
       },
       formatters_by_ft = {
         lua = { 'stylua' },
+        proto = { 'buf' },
         sql = { 'sql_formatter' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
